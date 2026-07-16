@@ -14,4 +14,4 @@ This repository contains my AI Backend Engineering learning journey.
 - RAG
 
 Currently Learning:
-- Phase 2 Day 13: Gemini API Fundamentals
+- Gemini API Fundamentals
