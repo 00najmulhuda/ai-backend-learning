@@ -18,3 +18,12 @@ class EmailGeneratorRequest(BaseModel):
 
 class SummaryGeneratorRequest(BaseModel):
     text:str
+
+class ProposalGeneratorRequest(BaseModel):
+    client_name:str
+    project_name:str
+    project_description:str
+    technologies:str
+    timeline:str
+    budget:str
+    

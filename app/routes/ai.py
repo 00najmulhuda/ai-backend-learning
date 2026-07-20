@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from app.schemas.ai import AIChatRequest,AIChatResponse,EmailGeneratorRequest,SummaryGeneratorRequest
+from app.schemas.ai import AIChatRequest,AIChatResponse,EmailGeneratorRequest, ProposalGeneratorRequest,SummaryGeneratorRequest
 from app.services.ai_service import AIService
 
 
@@ -28,5 +28,13 @@ def generate_email(request:EmailGeneratorRequest):
 def generate_summary(request:SummaryGeneratorRequest):
     response=AIService.generate_summary(request)
     return{
+        "response":response
+    }
+
+@router.post("/generate-proposal")
+def generate_proposal(request:ProposalGeneratorRequest):
+    response = AIService.generate_proposal(request)
+
+    return {
         "response":response
     }

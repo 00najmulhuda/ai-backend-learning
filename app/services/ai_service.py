@@ -1,4 +1,6 @@
-from app.schemas.ai import EmailGeneratorRequest, SummaryGeneratorRequest
+from email import message
+from multiprocessing.connection import Client
+from app.schemas.ai import EmailGeneratorRequest, ProposalGeneratorRequest, SummaryGeneratorRequest
 import ollama
 
 class AIService:
@@ -36,7 +38,6 @@ class AIService:
         sender_company:{request.sender_company}
         Designation: {request.sender_designation}
 
-        Instructions:
         Instructions:
         - Write an engaging subject line.
         - Greet the lead professionally.
@@ -94,6 +95,55 @@ class AIService:
             options={
                 "temperature":0.3,
                 "num_predict":200
+            }
+        )
+        return response["message"]["content"]
+    
+
+    @staticmethod
+    def generate_proposal(request:ProposalGeneratorRequest):
+        prompt=f"""
+        write a professional software project proposal.
+
+        Client information:
+        client_name:{request.client_name}
+
+        project information:
+        project: {request.project_name}
+        description: {request.project_description}
+
+        Technical requirements:
+        Technologies: {request.technologies}
+
+        project constraints:
+        timeline: {request.timeline}
+        budget:{request.budget}
+
+        Instructions:
+        - Start with a professional greeting.
+        - Show understanding of the client's requirements.
+        - Explain the proposed solution.
+        - Mention the technology stack.
+        - Mention timeline and budget naturally.
+        - End with a professional closing.
+        - Return only the proposal.
+        """
+
+        response=ollama.chat(
+            model="qwen2.5:3b",
+            messages=[
+                {
+                    "role":"system",
+                    "content":"you are an experience software agency proposal writer"
+                },
+                {
+                    "role":"user",
+                    "content":prompt
+                }
+            ],
+            options={
+                "temperature":0.6,
+                "num_predict":400
             }
         )
         return response["message"]["content"]
