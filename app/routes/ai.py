@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from app.schemas.ai import AIChatRequest,AIChatResponse,EmailGeneratorRequest
+from app.schemas.ai import AIChatRequest,AIChatResponse,EmailGeneratorRequest,SummaryGeneratorRequest
 from app.services.ai_service import AIService
 
 
@@ -19,6 +19,14 @@ def chat(request:AIChatRequest):
 @router.post("/generate-email")
 def generate_email(request:EmailGeneratorRequest):
     response = AIService.generate_email(request)
+    return{
+        "response":response
+    }
+
+
+@router.post("/generate-summary")
+def generate_summary(request:SummaryGeneratorRequest):
+    response=AIService.generate_summary(request)
     return{
         "response":response
     }

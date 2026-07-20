@@ -15,3 +15,6 @@ class EmailGeneratorRequest(BaseModel):
     sender_name:str
     sender_company:str
     sender_designation:str
+
+class SummaryGeneratorRequest(BaseModel):
+    text:str

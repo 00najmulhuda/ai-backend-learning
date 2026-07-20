@@ -1,4 +1,4 @@
-from app.schemas.ai import EmailGeneratorRequest
+from app.schemas.ai import EmailGeneratorRequest, SummaryGeneratorRequest
 import ollama
 
 class AIService:
@@ -53,7 +53,7 @@ class AIService:
             messages= [
                 {
                     "role":"system",
-                "content":"you are an sales expert copywriter who write professional business email"
+                    "content":"you are an sales expert copywriter who write professional business email"
                 },
                 {
                     "role":"user",
@@ -63,6 +63,37 @@ class AIService:
             options = {
                 "temperature":0.7,
                 "num_predict":300
+            }
+        )
+        return response["message"]["content"]
+
+    @staticmethod
+    def generate_summary(request:SummaryGeneratorRequest):
+        prompt = f"""
+        summarize the following text:
+        text: {request.text}
+        Instruction:
+        -keep the summary concise.
+        -preverse the important information.
+        -Return only the summary 
+        """
+
+        response= ollama.chat(
+            model= "qwen2.5:3b",
+            messages = [
+                {
+                    "role":"system",
+                    "content":"you are an expert at summarizing documents clearly and accurately"
+
+                },
+                {
+                    "role":"user",
+                    "content":prompt
+                }
+            ],
+            options={
+                "temperature":0.3,
+                "num_predict":200
             }
         )
         return response["message"]["content"]
