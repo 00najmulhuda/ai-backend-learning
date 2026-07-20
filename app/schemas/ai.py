@@ -9,6 +9,9 @@ class AIChatResponse(BaseModel):
 
 class EmailGeneratorRequest(BaseModel):
     lead_name:str
-    company:str
+    lead_company:str
     goal:str
     tone:str
+    sender_name:str
+    sender_company:str
+    sender_designation:str

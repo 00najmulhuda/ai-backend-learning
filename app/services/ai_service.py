@@ -23,10 +23,28 @@ class AIService:
     def generate_email(request:EmailGeneratorRequest):
         prompt = f""" 
         write a personalized business email.
+        Lead_informatio: 
         lead_name : {request.lead_name}
-        company:{request.company}
+        company:{request.lead_company}
+
+        requirements: 
         goal:{request.goal}
         tone:{request.tone}
+
+        sender information:
+        sender_name: {request.sender_name}
+        sender_company:{request.sender_company}
+        Designation: {request.sender_designation}
+
+        Instructions:
+        Instructions:
+        - Write an engaging subject line.
+        - Greet the lead professionally.
+        - Explain the value clearly.
+        - Keep the email concise.
+        - End with a professional call to action.
+        - Use the sender information in the signature.
+        - Return only the email without markdown or explanations.
         
         generate only the email
         """
